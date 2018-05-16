@@ -1,6 +1,6 @@
 <template>
-    <!-- 工具条 -->
 	<div>
+		<!-- 工具条 -->
 		<el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="min-width:600px;height:36px;">
 			<!-- <el-form-item label="活动名称">
 				<el-input v-model="form.name"></el-input>
@@ -31,8 +31,7 @@
 				</el-select>
 			</el-form-item>			
 		</el-form>
-		<div style="width:100%;float:left;margin: 0px 78px 20px 0;
-">
+		<div style="width:100%;float:left;margin: 0px 78px 20px 0;">
 				<el-button type="primary" @click="searchEvent()">查询</el-button>
 				<!-- 导出是直接调用后台接口的 -->
 				<el-button type="primary" @click="exportData()">导出</el-button>
@@ -65,10 +64,8 @@
 		    <el-table-column
 		      prop="unconfirmNum"
 		      label="未确认面料数量">
-		    </el-table-column>
-		    
+		    </el-table-column>		    
    		</el-table>
-
 	</div>
 </template>
 <script>

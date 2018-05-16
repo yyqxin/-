@@ -14,19 +14,19 @@
 					</el-dropdown-menu>
 				</el-dropdown>
 			</el-col>
-			<el-col :span="10" style="float:right" class="el-tabs__header">
+			<!-- <el-col :span="10" style="float:right" class="el-tabs__header">
 				<el-tabs v-model="activeName" @tab-click="handleClick" style="height: 80px; color:#fff;float:right; boder:0;">
 				    <el-tab-pane label="业务管理" name="0" class="el-tabs__item.is-active"><span><i class="el-icon-view"></i>业务管理</span></el-tab-pane>
 				    <el-tab-pane label="报表管理" name="1" class="el-tabs__item" >报表管理</el-tab-pane>
 				    <el-tab-pane label="资料管理" name="2" class="el-tabs__item">资料管理</el-tab-pane>
 			  </el-tabs>
-			</el-col>
+			</el-col> -->
 
 		</el-col>
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
 			<el-menu active-text-color="#20a0ff" :default-active="defaultIndex"  :default-openeds="defaultIndex" :unique-opened="true" :router="true">  
-                <template v-for="item in items">
+                <template v-for="item in items" v-model="activeName" @tab-click="handleClick">
 	                <template v-if="item.subs">
 	                    <el-submenu :index="item.index">
 	                        <template slot="title"><i :class="item.icon"></i>{{ item.title }}</template>
@@ -59,7 +59,7 @@
 	export default {
 		data() {
 			return {
-				sysName:'泽远智能综合平台',
+				sysName:'EI综合平台',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',
@@ -90,30 +90,11 @@
                                 title: '调样草稿'
                             }
                         ]
-                    }
-                ],
-                ywItem:[
-                	{
+                    },
+                     {
                         icon: 'el-icon-message',
                         index: '2',
-                        title: '业务管理',
-                        subs: [
-                            {
-                                index: 'adjustManage',
-                                title: '调样管理'
-                            },
-                            {
-                                index: 'draft',
-                                title: '调样草稿'
-                            }
-                        ]
-                    }
-                ],
-                bbItem:[
-                	{
-                    	icon: 'fa fa-id-card-o',
-                        index: 'statistics',
-                        title: '报表统计',
+                        title: '报表管理',
                         subs: [
                             {
                                 index: 'statistics',
@@ -122,22 +103,19 @@
                             {
                                 index: 'summary',
                                 title: '调样数据汇总表'
-                            }
-                            ,
-                            {
+                            },
+                             {
                                 index: 'dayPlan',
                                 title: '面料调样日计划'
                             }
                         ]
-                    }
-                ],
-                zlItem:[
-                	{
-                		icon: 'el-icon-message',
+                    },
+                     {
+                        icon: 'el-icon-message',
                         index: '3',
                         title: '资料管理',
                         subs: [
-                            {
+                             {
                                 index: 'season',
                                 title: "季节管理"
                             },
@@ -146,10 +124,59 @@
                                 title: '供应商管理'
                             }
                         ]
+                    }
+                ],
+                // ywItem:[
+                // 	{
+                //         icon: 'el-icon-message',
+                //         index: '2',
+                //         title: '业务管理',
+                //         subs: [
+                //             {
+                //                 index: 'adjustManage',
+                //                 title: '调样管理'
+                //             },
+                //             {
+                //                 index: 'draft',
+                //                 title: '调样草稿'
+                //             }
+                //         ]
+                //     }
+                // ],
+                // bbItem:[
+                // 	{
+                //     	icon: 'fa fa-id-card-o',
+                //         index: 'statistics',
+                //         title: '报表统计',
+                //         subs: [
+                //             {
+                //                 index: 'statistics',
+                //                 title: '调样数据统计表'
+                //             },
+                //             {
+                //                 index: 'summary',
+                //                 title: '调样数据汇总表'
+                //             }
+                //             ,
+                //             {
+                //                 index: 'dayPlan',
+                //                 title: '面料调样日计划'
+                //             }
+                //         ]
+                //     }
+                // ],
+                // zlItem:[
+                // 	{
+                // 		icon: 'el-icon-message',
+                //         index: '3',
+                //         title: '资料管理',
+                //         subs: [
+                           
+                //         ]
 
-                	}
-                ]
-                // items:[]
+                // 	}
+                // ]
+                // // items:[]
 			}
 		},
 		methods: {
@@ -356,4 +383,5 @@
 			}
 		}
 	}
+
 </style>

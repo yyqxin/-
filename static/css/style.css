@@ -1,6 +1,4 @@
-.el-form{
-	height: 360px;
-}
+
 .el-tabs__item{
 	color:#fff;
 	opacity: 0.7;
@@ -25,4 +23,16 @@
 }
 .el-select{
 	width: 100%;
+}
+.el-form{
+	height:36px;
+}
+.el-dialog__body{
+	padding-bottom:0;
+}
+.toolbar{
+	background: #fff;
+}
+.el-icon-edit{
+	width: 20px;
 }
