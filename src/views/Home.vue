@@ -25,7 +25,7 @@
 		</el-col>
 		<el-col :span="24" class="main">
 			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
-			<el-menu active-text-color="#20a0ff" :default-active="defaultIndex"  :default-openeds="defaultIndex" :unique-opened="true" :router="true">  
+			<el-menu active-text-color="#20a0ff" :default-active="default_index"  :default-openeds="defaultIndex" :unique-opened="true" :router="true">  
                 <template v-for="item in items" v-model="activeName" @tab-click="handleClick">
 	                <template v-if="item.subs">
 	                    <el-submenu :index="item.index">
@@ -74,6 +74,7 @@
 					desc: ''
 				},
 				activeName:'0',
+				default_index:'',
 				defaultIndex:[],
 				items: [
                    {
