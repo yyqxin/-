@@ -15,7 +15,7 @@
 		    <el-table-column prop="name" label="季节名称" width="180"></el-table-column>
 		    <el-table-column prop="directions" label="说明" width="180"></el-table-column>
 		    <el-table-column label="操作">
-				<template scope="scope">
+				<template slot-scope="scope">
 					<i class="el-icon-edit"  @click="handleEdit(scope.$index, scope.row)"></i>
 					<i class="el-icon-delete"  size="small" @click="handleDel(scope.$index, scope.row)"></i>
 				</template>
@@ -41,27 +41,6 @@
 				<el-button @click="resetForm('addForm')">重置</el-button>
 			</div>
 		</el-dialog>
-
-		<!-- <messageBox :dialogFormVisible = 'isShow'></messageBox> -->
-
-		<!--编辑界面-->
-		<!-- <el-dialog title="编辑" v-model="editFormVisible" :close-on-click-modal="false">
-			<el-form :model="editForm" label-width="80px" :rules="editFormRules" ref="editForm" style="height:240px;">
-				<el-form-item label="季节编号" prop="number">
-					<el-input v-model="editForm.number" auto-complete="off" placeholder="请输入季节编号"></el-input>
-				</el-form-item>
-				<el-form-item label="季节名称" prop="name">
-					<el-input v-model="editForm.name" auto-complete="off" placeholder="请输入季节名称"></el-input>
-				</el-form-item>
-				<el-form-item label="说明" prop="directions">
-					<el-input type="textarea" placeholder="请输入说明"  auto-complete="off" :rows="4" v-model="editForm.directions"></el-input>
-				</el-form-item>		
-			</el-form>
-			<div slot="footer" class="dialog-footer" style="text-align: left; margin-left:30px;margin-left:80px;">
-				<el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
-				<el-button @click="resetForm('editForm')">重置</el-button>
-			</div>
-		</el-dialog> -->
 	</section>
 </template>
 <script>
@@ -128,8 +107,8 @@
 					name: '2018冬',
 					directions: '',
 		        }, {
-		            number: '00000001',
-					name: '2018冬',
+		            number: '00000002',
+					name: '2018夏',
 					directions: '',
 		        }],
 				isShow: true,//新增界面是否显示
@@ -304,7 +283,24 @@
 </script>
 
 <style scoped lang="scss">
-	.el-dialog__body{
-		padding-bottom:0 !important;
+	.el-col-24{
+		background:none;
+	}
+	.el-form-item{
+	    display: block;
+	    clear:both;
+	    width:100%;
+	    margin-left:0;
+	}
+	.el-icon-delete:before {
+	    content: "\E612";
+	    font-size: 22px;
+	    line-height: 40px;
+	    margin-left: 10px;
+	}
+	.el-icon-edit:before {
+	    content: "\E614";
+	    font-size: 22px;
+	    line-height: 40px;
 	}
 </style>

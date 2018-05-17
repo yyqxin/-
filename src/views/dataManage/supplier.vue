@@ -1,140 +1,68 @@
 <template>
     <!-- 工具条 -->
-	<div>
-		<el-form ref="form" :model="form" label-width="80px" @submit.prevent="onSubmit" style="min-width:600px;height:36px;">
-			<!-- <el-form-item label="活动名称">
-				<el-input v-model="form.name"></el-input>
-			</el-form-item> -->
-			<el-form-item label="起始时间" class="">
-				<el-col :span="11">
-					<el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-				</el-col>
+	<section>
+		<el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
+			<el-form-item label="供应商名称" prop="name">
+			    <el-input type="text" v-model="ruleForm2.name" auto-complete="off" placeholder="供应商名称"></el-input>
 			</el-form-item>
-			<el-form-item label="终止时间">
-				<el-col :span="11">
-					<el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-				</el-col>
+			<el-form-item label="电话" prop="telephone">
+			    <el-input type="text" v-model="ruleForm2.telephone" auto-complete="off" placeholder="电话"></el-input>
 			</el-form-item>
+			<el-form-item label="供应商编码" prop="number">
+			    <el-input v-model.number="ruleForm2.number" placeholder="供应商编码"></el-input>
+			</el-form-item>
+			<el-form-item style="margin-top:0;">
+			    <el-button type="primary" @click="getUsers()">查询</el-button>
+			    <el-button type="primary" @click="submitForm('ruleForm2')">新增</el-button>
+			</el-form-item>
+	    </el-form>
 
-			<el-form-item label="部门组别">
-				<el-select v-model="form.region" placeholder="请选择">
-					<el-option label="设计部" value="shanghai"></el-option>
-					<el-option label="采购部" value="beijing"></el-option>
-				</el-select>
-			</el-form-item>
-			<el-form-item label="季节">
-				<el-select v-model="form.region" placeholder="请选择">
-					<el-option label="2018冬" value="shanghai"></el-option>
-					<el-option label="2018夏" value="beijing"></el-option>
-					<el-option label="2018春" value="beijing"></el-option>
-					<el-option label="2018秋" value="beijing"></el-option>
-				</el-select>
-			</el-form-item>			
-		</el-form>
-		<div style="width:100%;float:left;margin: 0px 78px 20px 0;
-">
-				<el-button type="primary">查询</el-button>
-				<!-- 导出是直接调用后台接口的 -->
-				<el-button type="primary" @click="exportData()">导出</el-button>
-	    </div>
+
 		<!-- 列表 -->
-		<el-table
-	    :data="tableData"
-	    border
-	    style="width: 100%">
-	    	<el-table-column
-		      prop="date"
-		      label="日期"
-		      width="120">
-		    </el-table-column>
-		    <el-table-column
-		      prop="department"
-		      label="部门"
-		      width="120">
-		    </el-table-column>
-		    <el-table-column
-		      prop="reason"
-		      label="季节"
-		      width="120">
-		    </el-table-column>
-		    <el-table-column
-		      prop="todaySku"
-		      label="今日设计提交SKU"
-		      width="180"> </el-table-column>
-		    <el-table-column
-		      prop="todaySampleN"
-		      label="今日回样数"
-		      width="120">
-		    </el-table-column>
-		    <el-table-column
-		      prop="todayComfirm"
-		      label="今日已确认"
-		      width="120">
-		    </el-table-column>
-		    <el-table-column
-		      prop="weekSkuN"
-		      label="周开发SKU数"
-		      width="180">
-		    </el-table-column>
-		    <el-table-column
-		      prop="remainNum"
-		      label="剩余未回数"
-		      width="120">
-		    </el-table-column>
-		    <el-table-column
-		      prop="totalComfirmSkuN"
-		      label="累计已确认SKU数量">
-		    </el-table-column>
-		    <el-table-column
-		      prop="totalRemainNum"
-		      label="累计剩余未回数">
-		    </el-table-column>
-		    <el-table-column
-		      prop="totalSkuNum"
-		      label="累计开发SKU数">
-		    </el-table-column>
-   		</el-table>
-
-	</div>
+		<el-table :data="tableData" border style="width: 100%">
+		    <el-table-column prop="number" label="供应商编号" width="180"></el-table-column>
+		    <el-table-column prop="name" label="供应商名称" width="360"></el-table-column>
+		    <el-table-column prop="phone" label="电话" width="260"></el-table-column>
+		    <el-table-column prop="Contacter" label="联系人" width="180"></el-table-column>
+		    <el-table-column prop="adress" label="供应商地址" width="360"></el-table-column>
+		    <el-table-column prop="landline" label="座机" width="260"></el-table-column>
+		    <el-table-column label="操作" >
+				<template slot-scope="scope">
+					<i class="el-icon-edit"  @click="handleEdit(scope.$index, scope.row)"></i>
+					<i class="el-icon-delete"  size="small" @click="handleDel(scope.$index, scope.row)"></i>
+				</template>
+			</el-table-column>
+        </el-table>
+        <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :page-size="20" :total="total" style="float:right;">
+		</el-pagination>
+	</section>
 </template>
 <script>
+     import util from '../../common/js/util'
+	//import NProgress from 'nprogress'
+	import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 	export default {
 		data() {
 			return {
-				form: {
+				ruleForm2: {
 					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
+					telephone:'',
+					number:'',
 				},
 				tableData: [{
-					date:'2018-05-15',
-			        department: 'COBB女童组',
-			        reason: '2018冬',
-			        todaySku: '13',
-			        todaySampleN:'1',
-			        todayComfirm:'0',
-			        weekSkuN:'13',
-			        remainNum:'13',
-			        totalComfirmSkuN:'33',
-			        totalRemainNum:'38',
-			        totalSkuNum:'71'
+					number:'58',
+			        name: '江阴市哈尼毛纺有限公司',
+			        phone: '0510-86978677',
+			        Contacter: '',
+			        adress:'',
+			        landline:''
 		        }, {
-		            date:'2018-05-15',
-			        department: 'COBB女童组',
-			        reason: '2018冬',
-			        todaySku: '13',
-			        todaySampleN:'1',
-			        todayComfirm:'0',
-			        weekSkuN:'13',
-			        remainNum:'13',
-			        totalComfirmSkuN:'33',
-			        totalRemainNum:'38',
-			        totalSkuNum:'71'
+		            number:'57',
+			        name: '穗成行',
+			        phone: '18933993989',
+			        Contacter: '13',
+			        adress:'广州国际轻纺城二楼F2113-2116号',
+			        landline:'020-89264377',
 		        }]
 			}
 		},
@@ -145,24 +73,53 @@
 			let d = date.getDate() > 9 ? date.getDate() : '0' + date.getDate();
 			this.form.date1 = y +'-'+m+'-'+d;
 			this.form.date1 = y +'-'+m+'-'+d;
+
+			this.getUsers();
 		},
 		methods: {
-			onSubmit() {
-				console.log('submit!');
+			handleCurrentChange(val) {
+				this.page = val;
+				this.getUsers();
+			},
+			getUsers() {
+				let para = {
+					page: this.page,
+					name: this.filters.name
+				};
+				this.listLoading = true;
+				//NProgress.start();
+				getUserListPage(para).then((res) => {
+					this.total = res.data.total;
+					this.users = res.data.users;
+					this.listLoading = false;
+					//NProgress.done();
+				});
 			},
 			//数据导出
 			exportData(){
 				//调用导出数据接口
 			}
 		}
+
 	}
 
 </script>
 <style scoped lang="scss">
 	.el-form-item{
 		display: inline-block;
-		width: 440px;
+		width: 25%;
 		float: left;
 		margin:20px 20px 20px 0;
     }
+    .el-icon-delete:before {
+	    content: "\E612";
+	    font-size: 22px;
+	    line-height: 40px;
+	    margin-left: 10px;
+	}
+	.el-icon-edit:before {
+	    content: "\E614";
+	    font-size: 22px;
+	    line-height: 40px;
+	}
 </style>

@@ -10,8 +10,8 @@
       <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
     <el-form-item prop="department">
-      <label>部门:</label>
-      <el-input type="text" v-model="ruleForm2.department" auto-complete="off" placeholder="请填写所在部门"></el-input>
+      <label>部门：</label>
+      <el-input type="text" v-model="ruleForm2.department" auto-complete="off" placeholder="部门"></el-input>
     </el-form-item>
     <el-form-item prop="role">
       <label>角色：</label>
@@ -101,6 +101,7 @@
     background-clip: padding-box;
     margin: 180px auto;
     width: 350px;
+    height:360px;
     padding: 35px 35px 15px 35px;
     background: #fff;
     border: 1px solid #eaeaea;
@@ -115,7 +116,7 @@
     }
   }
   .el-input{
-    width:300px;
+    width:298px;
     float:right;
   }
 </style>
