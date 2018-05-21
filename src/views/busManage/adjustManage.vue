@@ -314,7 +314,7 @@
                     <el-table-column prop="stylistRemark" label="设计师备注"></el-table-column>
                     <el-table-column prop="picture" label="图片" width=""></el-table-column>
                     <el-table-column prop="" label="操作" width="">
-                        <template scope="scope">
+                        <template slot-scope="scope">
                             <!-- 上传图片 -->
                             <i class="el-icon-upload2" title='上传图片' @click=""></i>
                             <!-- 添加一行 -->

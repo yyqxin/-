@@ -1,4 +1,4 @@
-<template>
+	<template>
 	<section>
 		<!--工具条-->
 		<el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
@@ -71,22 +71,6 @@
 					name: '',
 					directions: '',
 				},
-
-				editFormRules: {
-					number: [
-				        { required: true, message: '请输入季节编号', trigger: 'blur' },
-				        //{ validator: validaePass }
-			        ],
-			        name: [
-				        { required: true, message: '请输入季节名称', trigger: 'blur' },
-				        //{ validator: validaePass }
-			        ],
-			        directions: [
-				        { required: true, message: '请输入说明', trigger: 'blur' },
-				        //{ validator: validaePass }
-			        ]
-
-				},
 				addFormRules: {
 					number: [
 				        { required: true, message: '请输入季节编号', trigger: 'blur' },
@@ -96,22 +80,26 @@
 				        { required: true, message: '请输入季节名称', trigger: 'blur' },
 				        //{ validator: validaePass }
 			        ],
-			        directions:[
-				        { required: true, message: '请输入说明', trigger: 'blur' },
-				        //{ validator: validaePass }
-			        ]
+			  
 				},
 				//表格数据
 				tableData: [{
 			       number: '00000001',
 					name: '2018冬',
-					directions: '',
+					directions: '12221',
 		        }, {
 		            number: '00000002',
 					name: '2018夏',
-					directions: '',
+					directions: '111去111',
+		        },{
+			       number: '00000003',
+					name: '2018春',
+					directions: '1顺德区1111',
+		        }, {
+		            number: '00000004',
+					name: '2018秋',
+					directions: '1111颠三倒四11',
 		        }],
-				isShow: true,//新增界面是否显示
 				addLoading: false,
 				//新增界面数据
 				addForm: {
@@ -125,49 +113,28 @@
             messageBox
         },
 		methods: {
-			handleCurrentChange(val) {
-				this.page = val;
-				this.getUsers();
-			},
-			//获取用户列表
-			getUsers() {
-				// let para = {
-				// 	page: this.page,
-				// 	name: this.filters.name
-				// };
-				// this.listLoading = true;
-				// //NProgress.start();
-				// getUserListPage(para).then((res) => {
-				// 	this.total = res.data.total;
-				// 	this.tableData = res.data.users;
-				// 	this.listLoading = false;
-				// 	//NProgress.done();
-				// });
-			},
 			//删除
-			handleDel: function (index, row) {
-				// this.$confirm('确认删除该记录吗?', '提示', {
-				// 	type: 'warning'
-				// }).then(() => {
-				// 	this.listLoading = true;
-					this.tableData.splice(index,1)
-					//NProgress.start();
-				// 	let para = { id: row.id };
-				// 	removeUser(para).then((res) => {
-				// 		this.listLoading = false;
-				// 		//NProgress.done();
-				// 		this.$message({
-				// 			message: '删除成功',
-				// 			type: 'success'
-				// 		});
-				// 		this.getUsers();
-				// 	});
-				// }).catch(() => {
-
-				// });
+			handleDel(index, row) {
+				this.$confirm('您确定删除该数据吗?', '提示', {
+		          confirmButtonText: '确定',
+		          cancelButtonText: '取消',
+		          type: 'warning'
+		        }).then(() => {
+		          this.tableData.splice(index,1)
+		          this.$message({
+		            type: 'success',
+		            message: '删除成功!'
+		          });
+		        }).catch(() => {
+		          this.$message({
+		            type: 'info',
+		            message: '已取消删除'
+		          });          
+		        });
+					//this.tableData.splice(index,1)
 			},
 			//显示编辑界面
-			handleEdit: function (index, row) {
+			handleEdit(index, row) {
 				console.log(JSON.stringify(row))
 				this.addFormVisible = true;
 				this.text = '编辑';
@@ -177,7 +144,7 @@
 
 			},
 			//显示新增界面
-			handleAdd: function () {
+			handleAdd() {
 				this.addFormVisible = true;
 				this.text = '新增';
 				this.isEditShow = false;
@@ -187,34 +154,8 @@
 					directions: '',
 				};
 			},
-			//编辑
-			editSubmit: function () {
-				this.$refs.editForm.validate((valid) => {
-					if (valid) {
-						this.$confirm('确认提交吗？', '提示', {}).then(() => {
-							this.editLoading = true;
-							//NProgress.start();
-							let para = Object.assign({}, this.editForm);
-							editUser(para).then((res) => {
-								this.editLoading = false;
-								//NProgress.done();
-								this.$message({
-									message: '提交成功',
-									type: 'success'
-								});
-								this.$refs['editForm'].resetFields();
-								this.editFormVisible = false;
-								this.getUsers();
-							});
-						});
-					}
-				});
-			},
-			selsChange: function (sels) {
-				this.sels = sels;
-			},
 			//新增
-			addSubmit: function () {
+			addSubmit () {
 				//表单验证
 				this.$refs.addForm.validate((valid) => {
 					if (valid) {
@@ -228,20 +169,6 @@
 							    
 							}
 							this.addFormVisible = false
-							//NProgress.start();
-							// let para = Object.assign({}, this.addForm);
-							// addUser(para).then((res) => {
-							// 	this.addLoading = false;
-							// 	//NProgress.done();
-							// 	this.$message({
-							// 		message: '提交成功',
-							// 		type: 'success'
-							// 	});
-							// 	this.$refs['addForm'].resetFields();
-							// 	this.addFormVisible = false;
-							// 	this.getUsers();
-							// });
-						// });
 					}
 				});
 			},
@@ -249,31 +176,6 @@
 			resetForm(formName) {
 		        this.$refs[formName].resetFields();
 		    },
-			selsChange: function (sels) {
-				this.sels = sels;
-			},
-			//批量删除
-			batchRemove: function () {
-				var ids = this.sels.map(item => item.id).toString();
-				this.$confirm('确认删除选中记录吗？', '提示', {
-					type: 'warning'
-				}).then(() => {
-					this.listLoading = true;
-					//NProgress.start();
-					let para = { ids: ids };
-					batchRemoveUser(para).then((res) => {
-						this.listLoading = false;
-						//NProgress.done();
-						this.$message({
-							message: '删除成功',
-							type: 'success'
-						});
-						this.getUsers();
-					});
-				}).catch(() => {
-
-				});
-			}
 		},
 		mounted() {
 			this.getUsers();
