@@ -105,7 +105,7 @@
                         <el-button type="primary" @click="infoComplete">完善信息</el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" v-on:click="">打印调样签收表</el-button>
+                        <el-button type="primary" @click="printForm">打印调样签收表</el-button>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="">调用截屏</el-button>
@@ -117,7 +117,7 @@
             </el-form>
         </el-col>
         <!--列表-->
-        <el-table :data="tableData" border style="width: 100%" height='300'>
+        <el-table :data="tableData" border style="width: 100%" height='300' >
             <el-table-column fixed type="selection" prop='id' width="40" v-if=''></el-table-column>
 
 <!-- 单选框无法选中？？？ -->
@@ -167,6 +167,18 @@
                   <i class="el-icon-circle-check" title='办理完毕' @click=""></i>
               </template>
             </el-table-column>
+        </el-table>
+
+
+         <el-table :data="tableData" border style="width: 100%" height='300' id="form1">
+            <el-table-column prop="person" label="需求人" width=""> </el-table-column>
+            <el-table-column prop="department" label="部门" width=""> </el-table-column>
+            <el-table-column prop="season" label="季节"> </el-table-column>
+            <el-table-column prop="date" label="填写日期"> </el-table-column>
+            <el-table-column prop="styleNum" label="款号" width=""></el-table-column>
+            <el-table-column prop="status" label="状态" width=""></el-table-column>
+            <el-table-column prop="supplier" label="供应商" width=""></el-table-column>
+            <el-table-column prop="supplierTel" label="供应商电话" width=""></el-table-column>
         </el-table>
         <!-- 调样需求登记，直接登记新的需求，不需要勾选表格里某个数据 -->
         <!-- 需求人、部门、填写日期自动获取数据，且需求人数据只读，季节手动选择 -->
@@ -369,7 +381,7 @@
                         </div>
                     </el-col>
                 </el-row>
-                <el-table :data="tableData" border class='marginBottom'>
+                <el-table :data="tableData" border class='marginBottom' >
                     <el-table-column prop="styleNum" label="用于款号" width=""></el-table-column>
                     <el-table-column prop="supplier" label="供应商名称" width=""></el-table-column>
                     <el-table-column prop="supplierArticleNum" label="供应商货号" width=""></el-table-column>
@@ -428,6 +440,7 @@
 </template>
 <script>
 import util from '../../common/js/util'
+import {needCLodop,getLodop} from '../../../static/lodop/lodopFuncs'
 import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api';
 export default {
     data() {
@@ -594,6 +607,15 @@ export default {
         }
     },
     methods: {
+        printForm(){
+            LODOP=getLodop();  
+            var strBodyStyle="<style>table tr{width:80%;}table tr td { border: 1 solid red;border-collapse:collapse ;text-align:center}table tr th { border: 1 solid red;border-collapse:collapse ;text-align:center}</style>";
+            var strFormHtml=strBodyStyle+"<body>"+document.getElementById("form1").innerHTML+"</body>";
+            LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_样式风格");
+            LODOP.ADD_PRINT_TEXT(50,0,100,100,"细线样式打印：");
+            LODOP.ADD_PRINT_HTM(88,0,100,100,strFormHtml);
+            LODOP.PREVIEW();  
+        },
         // 需求登记
         demandCheckIn: function() {
             this.formCheckIn = true;
