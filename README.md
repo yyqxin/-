@@ -1,57 +1,44 @@
-**demo**: [https://taylorchen709.github.io/vue-admin/](https://taylorchen709.github.io/vue-admin/)
+# 简之妙数据报表中心 #
+基于Vue.js 2.x系列 + Element UI 的后台管理系统解决方案。
 
-# To start
+## 前言 ##
 
-This is a project template for [vue-cli](https://github.com/vuejs/vue-cli)
+基于vue.js,使用vue-cli脚手架快速生成项目目录，引用Element UI组件库，方便开发快速简洁好看的组件。分离颜色样式，支持手动切换主题色，而且很方便使用自定义主题色。
 
-``` bash
-# install dependencies
-npm install
+## 目录结构介绍 ##
 
-# serve with hot reload at localhost:8081
-npm run dev
+	|-- build                            // webpack配置文件
+	|-- config                           // 项目打包路径
+	|-- src                              // 源码目录
+	|   |-- api			                 // api接口
+	|       |-- api.js                   // api接口定义
+	|   |-- components                   // 组件
+	|       |-- common                   // 公共组件
+	|           |-- Header.vue           // 公共头部
+	|           |-- Home.vue           	 // 公共路由入口
+	|		|-- page                   	 // 主要路由页面
+	|           |-- Login.vue          	 // 登录
+	|   |-- App.vue                      // 页面入口文件
+	|   |-- main.js                      // 程序入口文件，加载各种公共组件
+	|-- .babelrc                         // ES6语法编译配置
+	|-- .editorconfig                    // 代码编写规格
+	|-- .gitignore                       // 忽略的文件
+	|-- index.html                       // 入口html文件
+	|-- package.json                     // 项目及工具的依赖配置文件
+	|-- README.md                        // 说明
 
-# build for production with minification
-npm run build
 
-```
+## 使用步骤 ##
 
-# Folder structure
-* build - webpack config files
-* config - webpack config files
-* dist - build
-* src -your app
-    * api
-    * assets
-    * common
-    * components - your vue components
-    * mock
-    * styles
-    * views - your pages
-    * vuex
-    * App.vue
-    * main.js - main file
-    * routes.js
-* static - static assets
+	cnpm install         // 安装项目依赖，等待安装完成之后
 
-# Theme
-You can change theme by 
-1. Generate theme packages by [https://elementui.github.io/theme-preview/#/](https://elementui.github.io/theme-preview/#/)
-2. Put theme packages in src/assets/theme/
-3. Edit src/main.js 
-``` bash
-   import 'element-ui/lib/theme-default/index.css'
-   to
-   import './assets/theme/your-theme/index.css'
-```
-4. Edit src/styles/vars.scss
+## 本地开发 ##
 
-![theme-blue](https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/rec-demo.gif)
-![theme-green](https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/theme-green.png)
+	// 开启服务器，浏览器访问 http://localhost:8080
+	npm run dev
 
-# Browser support
+## 构建生产 ##
 
-Modern browsers and IE 10+.
-
-# License
-[MIT](http://opensource.org/licenses/MIT)
+	cnpm run build:dll 	// 打包DLL引用
+	// 执行构建命令，生成的dist文件夹放在服务器下即可访问
+	npm run build
